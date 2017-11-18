@@ -166,7 +166,7 @@ public class DatabaseAccountDAO implements AccountDAO{
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseDefinition.AC_COL_4, account.getBalance());
 
-        // update query
+
         int state = db.update("Account",contentValues,DatabaseDefinition.AC_COL_1 + " = "+account.getAccountNo(),null);
 
         if(state!=-1){
