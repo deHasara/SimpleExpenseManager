@@ -16,6 +16,11 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.ui;
 
+import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,12 +29,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.InMemoryDemoExpenseManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
+    DatabaseHelper myDb;
+    EditText editAccountNo, editBankName, editAccountHolderName, editBalance;
+    Button btnAddData;
+
+
     private ExpenseManager expenseManager;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,6 +62,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        myDb = new DatabaseHelper(this);
+
+        editAccountNo = (EditText)findViewById(R.id.account_num);
+        editBankName = (EditText)findViewById(R.id.bank_name);
+        editAccountHolderName = (EditText)findViewById(R.id.account_holder_name);
+        editBalance = (EditText)findViewById(R.id.initial_balance);
+        btnAddData = (Button)findViewById(R.id.add_account);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -67,6 +87,27 @@ public class MainActivity extends AppCompatActivity {
         /***  Begin generating dummy data for In-Memory implementation  ***/
         expenseManager = new InMemoryDemoExpenseManager();
         /*** END ***/
+
+        addData();
+    }
+
+    public void addData(){
+        btnAddData.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        boolean isInserted = myDb.insertData(editAccountNo.getText().toString(),
+                                editBankName.getText().toString(),
+                                editAccountHolderName.getText().toString(),
+                                editBalance.getText().toString());
+
+                        if (isInserted)
+                            Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(MainActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
     }
 
     /**
