@@ -16,7 +16,6 @@
 
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.ui;
 
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +33,7 @@ import android.widget.Toast;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.R;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.ExpenseManager;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.InMemoryDemoExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.SQLiteDB.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity{
     DatabaseHelper myDb;
